@@ -1,18 +1,26 @@
-pipeline{
-        agent any
+pipeline {
+    agent any
 
-        tools{
-            nodejs 'nodejs-22-6-0' 
+    tools {
+        nodejs 'nodejs-22-6-0'
+    }
 
+    stages {
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    // Install dependencies without auditing
+                    sh 'npm install --no-audit'
+                }
+            }
         }
 
-    stages{
-        stage('install dependentes'){
-
-            steps{
+    stages {
+        stage('Installing Dependencies') {
+            options { timestamps() }
+            steps {
                 sh 'npm install --no-audit'
-                                  
-            }    
+            }
         }
     }
 }
