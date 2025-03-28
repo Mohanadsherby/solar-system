@@ -17,8 +17,8 @@ pipeline {
 
         stage('NPM Dependency Audit') {
             steps {
-                sh 'npm audit '
-
+                sh 'npm audit --audit-level=critical'
+                sh 'npm audit fix --force'
                 }
             }
         }
