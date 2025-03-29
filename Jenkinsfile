@@ -6,6 +6,13 @@ pipeline {
     }
 
     stages {
+
+        stage('git checkout') {
+            steps {
+                    checkout scmGit(branches: [[name: '*/feature1']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Mohanadsherby/solar-system.git']])
+                                }
+        }    
+
         stage('Install Dependencies') {
             steps {
                 script {
@@ -20,5 +27,16 @@ pipeline {
                 sh 'npm audit --audit-level=critical'
                 }
             }
+        stage('Owasp DEpendency Check') {
+            steps {
+                    dependencyCheck additionalArguments: '''
+                            --scan "./"
+                            --disableYarnAudit
+                            --format ALL
+                            --prettyPrint
+                        ''', odcInstallation: 'dependency-check-owassp'
+                }
+            }
+
         }
     }    
