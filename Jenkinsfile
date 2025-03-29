@@ -34,16 +34,16 @@ pipeline {
                                 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report/', reportFiles: 'index.html', reportName: 'code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
                             }
                         }
+                       stage('Unit Testing') {
+                            options { retry(2) }
+                             steps {
+                                     sh 'npm test' 
+                             }
+                         }    
+                    
                     }
                                 
                 }
-
-                  stage('Unit Testing') {
-                    options { retry(2) }
-                    steps {
-                        sh 'npm test' 
-                    }
-                }    
 
             }
 
