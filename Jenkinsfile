@@ -23,12 +23,12 @@ pipeline {
                     }
                 stage('Owasp DEpendency Check') {
                     steps {
-                            dependencyCheck additionalArguments: '''
-                                    --scan "./"
-                                    --disableYarnAudit
-                                    --format ALL
-                                    --prettyPrint
-                                ''', odcInstallation: 'dependency-check-owassp'
+                        dependencyCheck additionalArguments: '''
+                            --scan \'./\' 
+                            --out \'./\'  
+                            --format \'ALL\' 
+                            --disableYarnAudit \
+                            --prettyPrint''', odcInstallation:'dependency-check-owassp'
                        }             
 
                     }
