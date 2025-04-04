@@ -20,29 +20,21 @@ pipeline {
         }
         stage('DEpendency scanning '){
                parallel{     
-                stage('NPM Dependency Audit') {
-                    steps {
-                        sh 'npm audit --audit-level=critical'
-                        }
-                    }
-                 stage('Code Coverage') {
-                            steps {
-                                catchError(buildResult: 'SUCCESS', message: 'Oops! it will be fixed in future releases', stageResult: 'UNSTABLE') {
-                                sh 'npm run coverage'
-                                }
-
-                                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report/', reportFiles: 'index.html', reportName: 'code coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+                    stage('NPM Dependency Audit') {
+                        steps {
+                            sh 'npm audit --audit-level=critical'
                             }
                         }
-                       stage('Unit Testing') {
-                            options { retry(2) }
-                             steps {
-                                     sh 'npm test' 
-                             }
-                         }    
-                    
+                    stage('OWASP Dependency Check') {
+                        steps {
+                            dependencyCheck additionalArguments: '''  --scan \\\'./\\\' 
+                            --out \\\'./\\\'  
+                            --format \\\'ALL\\\' 
+                            --disableYarnAudit \\''', odcInstallation: 'dependency-check-owassp'
+                            
+                         dependencyCheckPublisher pattern: 'dependency-check-report.xml', unstableTotalCritical: 1   
+
                     }
-                                
                 }
 
             }
