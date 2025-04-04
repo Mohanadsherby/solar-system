@@ -5,7 +5,7 @@ pipeline {
         nodejs 'nodejs-22-6-0'
     }
     environment {
-        MONGO_URI = "mongodb+srv://mohanadsherby:SlGMpaSPWGl3qLU3@cluster0.b8k0ocr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+        MONGO_URI = "mongodb+srv://cluster0.b8k0ocr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
     }
 
