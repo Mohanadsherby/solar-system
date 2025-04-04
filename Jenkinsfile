@@ -42,12 +42,14 @@ pipeline {
         }
                 stage('Unit Testing') {
             steps {
-                script {
-                    // Install dependencies without auditing
-                    sh 'npm test'
+
+                withCredentials([usernamePassword(credentialsId: 'mongo-db-credintials', passwordVariable: 'MONGO_PASSWORD', usernameVariable: 'MONGO_USERNAME')]) {
+                    // some block
                 }
+                    sh 'npm test'
             }
         }
-
     }
-}    
+
+}
+    
