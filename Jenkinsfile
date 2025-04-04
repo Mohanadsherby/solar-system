@@ -31,7 +31,7 @@ pipeline {
                             --out \\\'./\\\'  
                             --format \\\'ALL\\\' 
                             --disableYarnAudit \\''', odcInstallation: 'dependency-check-owassp'
-                            
+
                          dependencyCheckPublisher pattern: 'dependency-check-report.xml', unstableTotalCritical: 1   
 
                     }
@@ -40,4 +40,5 @@ pipeline {
             }
 
         }
- 
+    }
+}    
