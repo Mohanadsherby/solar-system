@@ -40,5 +40,14 @@ pipeline {
             }
 
         }
+                stage('Unit Testing') {
+            steps {
+                script {
+                    // Install dependencies without auditing
+                    sh 'npm test'
+                }
+            }
+        }
+
     }
 }    
