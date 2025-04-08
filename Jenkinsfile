@@ -6,7 +6,7 @@ pipeline {
     }
     environment {
         MONGO_URI = "mongodb+srv://cluster0.b8k0ocr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-        SONARSONAR_SCANNER_HOME = tool 'sonarqube-scanner-610';
+        SONARSONAR_SCANNER_HOME = tool 'SONAR_QUBE';
 
     }
 
