@@ -22,18 +22,18 @@ pipeline {
         stage('DEpendency scanning '){
             parallel{     
                     stage('NPM Dependency Audit') {
-                        steps {
-                            sh 'npm audit --audit-level=critical'
-                            }
-                        }
+                                steps {
+                                    sh 'npm audit --audit-level=critical'
+                                    }
+                                }
                     stage('OWASP Dependency Check') {
-                        steps {
-                            dependencyCheck additionalArguments: '''  --scan \\\'./\\\' 
-                            --out \\\'./\\\'  
-                            --format \\\'ALL\\\' 
-                            --disableYarnAudit \\''', odcInstallation: 'dependency-check-owassp'
+                                steps {
+                                    dependencyCheck additionalArguments: '''  --scan \\\'./\\\' 
+                                    --out \\\'./\\\'  
+                                    --format \\\'ALL\\\' 
+                                    --disableYarnAudit \\''', odcInstallation: 'dependency-check-owassp'
 
-                        dependencyCheckPublisher pattern: 'dependency-check-report.xml', unstableTotalCritical: 1 
+                                dependencyCheckPublisher pattern: 'dependency-check-report.xml', unstableTotalCritical: 1 
 
                     }
                 }
@@ -47,8 +47,15 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', message: 'Oops! it will be fixed in future releases', stageResult: 'UNSTABLE') {
                     sh 'npm run coverage'
                 }
+                 publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code Coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
+
+
             }
         }
+
+    }
+}    
+
     //     stage('Unit Testing') {
     // steps {
 
@@ -60,12 +67,6 @@ pipeline {
     //                 }
     //             }
     
-        post {
-            always {
-                publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code Coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
 
-            }
-        }
 
-    }
-}        
+ 
